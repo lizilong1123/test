@@ -30,7 +30,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>HelloWorld.jar</finalName>
+		<finalName>HelloWorld</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
