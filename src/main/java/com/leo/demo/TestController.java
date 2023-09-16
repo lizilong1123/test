@@ -30,5 +30,13 @@ public class TestController {
         return "太好了 LEO";
     }
 
+    @GetMapping("/update")
+    public String update() {
+
+        System.out.println("太棒了 LEO");
+
+        return "太棒了 LEO";
+    }
+
 
 }
