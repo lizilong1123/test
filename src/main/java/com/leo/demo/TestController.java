@@ -22,4 +22,13 @@ public class TestController {
         return "nihao LEO";
     }
 
+    @GetMapping("/put")
+    public String put() {
+
+        System.out.println("太好了 LEO");
+
+        return "太好了 LEO";
+    }
+
+
 }
