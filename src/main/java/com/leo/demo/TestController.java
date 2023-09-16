@@ -38,5 +38,12 @@ public class TestController {
         return "太棒了 LEO";
     }
 
+    @GetMapping("/delete")
+    public String delete() {
+
+        System.out.println("好赞啊 LEO");
+
+        return "好赞啊 LEO";
+    }
 
 }
