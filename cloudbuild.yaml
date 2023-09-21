@@ -64,7 +64,7 @@ substitutions:
   _K8S_LABELS: ''
   _DOCKERFILE_DIR: ''
   _K8S_ANNOTATIONS: gcb-trigger-id=86cccf88-49cd-4b42-b4aa-8d459c1c734f
-  _GKE_CLUSTER: jenkins-cd
+  _GKE_CLUSTER: mamba-k8s-tag
   _OUTPUT_BUCKET_PATH: mambamhs_cloudbuild/deploy
   _DOCKERFILE_NAME: Dockerfile
   _K8S_YAML_PATH: kubernetes.yaml
