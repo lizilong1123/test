@@ -1,10 +1,13 @@
 steps:
-  - name: maven:3.8.5-eclipse-temurin-17-alpine
+  - name: 'maven:3.8.5-eclipse-temurin-17-alpine'
+    args:
+      - test
     entrypoint: mvn
-    args: ["test"]
-  - name: maven:3.8.5-eclipse-temurin-17-alpine
+  - name: 'maven:3.8.5-eclipse-temurin-17-alpine'
+    args:
+      - package
+      - '-Dmaven.test.skip=true'
     entrypoint: mvn
-    args: ["package", "-Dmaven.test.skip=true"]
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -60,18 +63,17 @@ images:
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
-  _GKE_CLUSTER: mamba-k8s-tag
+  _DOCKERFILE_NAME: Dockerfile
   _K8S_APP_NAME: tag
-  _K8S_NAMESPACE: tag
+  _IMAGE_NAME: gcr.io/mambamhs/github_lizilong1123_test
+  _GKE_CLUSTER: mamba-k8s-tag
+  _K8S_ANNOTATIONS: gcb-trigger-id=521b874a-cf7b-4c97-aa26-04a25a76523d
+  _OUTPUT_BUCKET_PATH: mambamhs_cloudbuild/deploy
   _K8S_LABELS: ''
   _GKE_LOCATION: us-central1-a
-  _DOCKERFILE_NAME: Dockerfile
-  _DOCKERFILE_DIR: ''
-  _OUTPUT_BUCKET_PATH: mambamhs_cloudbuild/deploy
-  _K8S_ANNOTATIONS: gcb-trigger-id=521b874a-cf7b-4c97-aa26-04a25a76523d
-  _IMAGE_NAME: gcr.io/mambamhs/github_lizilong1123_test
+  _K8S_NAMESPACE: tag
   _K8S_YAML_PATH: kubernetes.yaml
+  _DOCKERFILE_DIR: ''
 tags:
   - gcp-cloud-build-deploy
   - $_K8S_APP_NAME
-
