@@ -60,4 +60,14 @@ public class TestController {
 
     }
 
+    @GetMapping("/zz")
+    public String zz() {
+
+        System.out.println("搞定啊 zz");
+
+        return "搞定啊 zz";
+
+
+    }
+
 }
