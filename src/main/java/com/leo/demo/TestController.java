@@ -42,6 +42,7 @@ public class TestController {
     public String run() {
 
         System.out.println("好赞啊 LEO");
+        System.out.println("好赞啊 LEO");
 
         return "好赞啊 LEO";
 
