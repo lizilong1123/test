@@ -60,17 +60,18 @@ images:
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
-  _IMAGE_NAME: gcr.io/mambamhs/github_lizilong1123_test
-  _K8S_LABELS: ''
-  _DOCKERFILE_DIR: ''
-  _K8S_ANNOTATIONS: gcb-trigger-id=86cccf88-49cd-4b42-b4aa-8d459c1c734f
   _GKE_CLUSTER: mamba-k8s-tag
-  _OUTPUT_BUCKET_PATH: mambamhs_cloudbuild/deploy
+  _K8S_APP_NAME: tag
+  _K8S_NAMESPACE: tag
+  _K8S_LABELS: ''
+  _GKE_LOCATION: us-central1-a
   _DOCKERFILE_NAME: Dockerfile
+  _DOCKERFILE_DIR: ''
+  _OUTPUT_BUCKET_PATH: mambamhs_cloudbuild/deploy
+  _K8S_ANNOTATIONS: gcb-trigger-id=521b874a-cf7b-4c97-aa26-04a25a76523d
+  _IMAGE_NAME: gcr.io/mambamhs/github_lizilong1123_test
   _K8S_YAML_PATH: kubernetes.yaml
-  _K8S_NAMESPACE: jar
-  _GKE_LOCATION: us-east1-d
-  _K8S_APP_NAME: helloworld-jar
 tags:
   - gcp-cloud-build-deploy
   - $_K8S_APP_NAME
+
