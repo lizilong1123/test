@@ -39,11 +39,22 @@ public class TestController {
     }
 
     @GetMapping("/run")
-    public String delete() {
+    public String run() {
 
         System.out.println("好赞啊 LEO");
 
         return "好赞啊 LEO";
+
+
+    }
+
+
+    @GetMapping("/delete")
+    public String delete() {
+
+        System.out.println("搞定啊 LEO");
+
+        return "搞定啊 LEO";
 
 
     }
