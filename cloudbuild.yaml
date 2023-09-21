@@ -63,17 +63,17 @@ images:
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
-  _DOCKERFILE_NAME: Dockerfile
-  _K8S_APP_NAME: tag
-  _IMAGE_NAME: gcr.io/mambamhs/github_lizilong1123_test
-  _GKE_CLUSTER: mamba-k8s-tag
-  _K8S_ANNOTATIONS: gcb-trigger-id=521b874a-cf7b-4c97-aa26-04a25a76523d
-  _OUTPUT_BUCKET_PATH: mambamhs_cloudbuild/deploy
-  _K8S_LABELS: ''
-  _GKE_LOCATION: us-central1-a
-  _K8S_NAMESPACE: tag
   _K8S_YAML_PATH: kubernetes.yaml
+  _GKE_LOCATION: us-central1-a
+  _K8S_NAMESPACE: newstar
+  _K8S_ANNOTATIONS: gcb-trigger-id=3a010af0-ba38-4192-8833-f99aab143280
   _DOCKERFILE_DIR: ''
+  _K8S_APP_NAME: newstar
+  _OUTPUT_BUCKET_PATH: mambamhs_cloudbuild/deploy
+  _DOCKERFILE_NAME: Dockerfile
+  _K8S_LABELS: ''
+  _IMAGE_NAME: gcr.io/mambamhs/github_lizilong1123_test
+  _GKE_CLUSTER: cluster-1
 tags:
   - gcp-cloud-build-deploy
   - $_K8S_APP_NAME

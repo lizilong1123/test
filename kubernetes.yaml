@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: helloworld-jar
+    app: newstar
   managedFields:
     - apiVersion: apps/v1
       fieldsType: FieldsV1
@@ -51,7 +51,7 @@ metadata:
               'f:terminationGracePeriodSeconds': {}
       manager: GoogleCloudConsole
       operation: Update
-      time: '2023-09-16T09:13:53Z'
+      time: '2023-09-21T04:53:24Z'
     - apiVersion: apps/v1
       fieldsType: FieldsV1
       fieldsV1:
@@ -86,14 +86,14 @@ metadata:
       manager: kube-controller-manager
       operation: Update
       subresource: status
-      time: '2023-09-16T09:15:56Z'
-  name: helloworld-jar
-  namespace: jar
+      time: '2023-09-21T04:56:56Z'
+  name: newstar
+  namespace: newstar
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: helloworld-jar
+      app: newstar
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -102,7 +102,7 @@ spec:
   template:
     metadata:
       labels:
-        app: helloworld-jar
+        app: newstar
     spec:
       containers:
         - image: gcr.io/mambamhs/github_lizilong1123_test
@@ -113,7 +113,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    app: helloworld-jar
+    app: newstar
   managedFields:
     - apiVersion: autoscaling/v2
       fieldsType: FieldsV1
@@ -132,7 +132,7 @@ metadata:
             'f:name': {}
       manager: GoogleCloudConsole
       operation: Update
-      time: '2023-09-16T09:15:45Z'
+      time: '2023-09-21T04:56:51Z'
     - apiVersion: autoscaling/v2
       fieldsType: FieldsV1
       fieldsV1:
@@ -167,9 +167,9 @@ metadata:
       manager: vpa-recommender
       operation: Update
       subresource: status
-      time: '2023-09-16T09:16:41Z'
-  name: helloworld-jar-hpa-4qwi
-  namespace: jar
+      time: '2023-09-21T04:57:11Z'
+  name: newstar-hpa-rfwg
+  namespace: newstar
 spec:
   maxReplicas: 1
   metrics:
@@ -183,4 +183,74 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: helloworld-jar
+    name: newstar
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+  finalizers:
+    - service.kubernetes.io/load-balancer-cleanup
+  labels:
+    app: newstar
+  managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:allocateLoadBalancerNodePorts': {}
+          'f:externalTrafficPolicy': {}
+          'f:internalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":8080,"protocol":"TCP"}':
+              .: {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector': {}
+          'f:sessionAffinity': {}
+          'f:type': {}
+      manager: GoogleCloudConsole
+      operation: Update
+      time: '2023-09-21T04:53:51Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:finalizers':
+            .: {}
+            'v:"service.kubernetes.io/load-balancer-cleanup"': {}
+        'f:status':
+          'f:loadBalancer':
+            'f:ingress': {}
+      manager: cloud-controller-manager
+      operation: Update
+      subresource: status
+      time: '2023-09-21T04:54:31Z'
+  name: newstar-service
+  namespace: newstar
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.10.41.230
+  clusterIPs:
+    - 10.10.41.230
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - nodePort: 30813
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: newstar
+  sessionAffinity: None
+  type: LoadBalancer
