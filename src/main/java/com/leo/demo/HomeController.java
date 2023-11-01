@@ -30,12 +30,14 @@ public class HomeController {
 
     @GetMapping("/livenessProbe")
     public String livenessProbe() {
+        System.out.println("livenessProbe");
         return "ok";
     }
 
     @GetMapping("/readinessProbe")
     public String readinessProbe() {
-        throw new RuntimeException("123");
+        System.out.println("readinessProbe");
+        return "ok";
     }
 
     @GetMapping("/startupProbe")
