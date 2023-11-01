@@ -29,7 +29,7 @@ steps:
       - 'image'
       - '--namespace=test'
       - 'deployment/test'
-      - 'mzt-mambamhs-1=$_IMAGE_NAME:$COMMIT_SHA'
+      - 'test=$_IMAGE_NAME:$COMMIT_SHA'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=${_K8S_COMPUTE_ZONE}'
       - 'CLOUDSDK_CONTAINER_CLUSTER=${_K8S_CLUSTER}'
