@@ -29,7 +29,7 @@ steps:
       - 'image'
       - '--namespace=test'
       - 'deployment/test'
-      - 'test-1=$_IMAGE_NAME:$COMMIT_SHA'
+      - 'github-lizilong1123-test-sha256-1=$_IMAGE_NAME:$COMMIT_SHA'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=${_K8S_COMPUTE_ZONE}'
       - 'CLOUDSDK_CONTAINER_CLUSTER=${_K8S_CLUSTER}'
