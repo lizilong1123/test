@@ -53,7 +53,7 @@ public class TestController {
     @GetMapping("/delete")
     public String delete() {
 
-        System.out.println("搞定啊 LEO");
+        System.out.println("搞定 啊 LEO");
 
         return "搞定啊 LEO";
 
