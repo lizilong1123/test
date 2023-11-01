@@ -31,7 +31,7 @@ public class HomeController {
     @GetMapping("/livenessProbe")
     public String livenessProbe() {
         System.out.println("livenessProbe");
-        return "ok";
+        throw new RuntimeException("123");
     }
 
     @GetMapping("/readinessProbe")
