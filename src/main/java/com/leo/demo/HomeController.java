@@ -35,7 +35,7 @@ public class HomeController {
 
     @GetMapping("/readinessProbe")
     public String readinessProbe() {
-        return "ok";
+        throw new RuntimeException("123");
     }
 
     @GetMapping("/startupProbe")
