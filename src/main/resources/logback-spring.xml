@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="logback-base.xml"/>
+
+    <!--日志格式应用spring boot默认的格式，也可以自己更改-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--定义日志存放的位置，默认存放在项目启动的相对路径的目录-->
+    <springProperty scope="context" name="LOG_PATH" source="mzt.log-path" defaultValue="app-log"/>
+
+    <!-- ****************************************************************************************** -->
+    <!-- ****************************** 本地开发只在控制台打印日志 ************************************ -->
+    <!-- ****************************************************************************************** -->
+
+
+
+    <springProfile name="pro">
+        <appender name="CLOUD" class="com.google.cloud.logging.logback.LoggingAppender">
+            <!-- Optional : filter logs at or above a level -->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>INFO</level>
+            </filter>
+            <redirectToStdout>false</redirectToStdout>
+            <log>test-LEO.log</log> <!-- Optional : default java.log -->
+            <flushLevel>INFO</flushLevel> <!-- Optional : default ERROR -->
+        </appender>
+        <root level="info">
+            <appender-ref ref="CLOUD" />
+        </root>
+    </springProfile>
+
+</configuration>
+
+
