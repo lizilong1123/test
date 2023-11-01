@@ -1,79 +1,49 @@
 steps:
   - name: 'maven:3.8.5-eclipse-temurin-17-alpine'
     args:
-      - test
+      - clean
     entrypoint: mvn
-  - name: 'maven:3.8.5-eclipse-temurin-17-alpine'
+
+  - name: 'maven:3.8.3-eclipse-temurin-11'
     args:
       - package
-      - '-Dmaven.test.skip=true'
+      - '-U'
+      - '-Ppro'
     entrypoint: mvn
   - name: gcr.io/cloud-builders/docker
     args:
       - build
       - '-t'
       - '$_IMAGE_NAME:$COMMIT_SHA'
+      - '--cache-from'
+      - 'gcr.io/mambamhs/github_lizilong1123_test:latest'
       - .
       - '-f'
       - $_DOCKERFILE_NAME
-    dir: $_DOCKERFILE_DIR
-    id: Build
   - name: gcr.io/cloud-builders/docker
-    args:
-      - push
-      - '$_IMAGE_NAME:$COMMIT_SHA'
+    args: ['push', '$_IMAGE_NAME:$COMMIT_SHA']
     id: Push
-  - name: gcr.io/cloud-builders/gke-deploy
+  - name: 'gcr.io/cloud-builders/kubectl'
     args:
-      - prepare
-      - '--filename=$_K8S_YAML_PATH'
-      - '--image=$_IMAGE_NAME:$COMMIT_SHA'
-      - '--app=$_K8S_APP_NAME'
-      - '--version=$COMMIT_SHA'
-      - '--namespace=$_K8S_NAMESPACE'
-      - '--label=$_K8S_LABELS'
-      - '--annotation=$_K8S_ANNOTATIONS,gcb-build-id=$BUILD_ID'
-      - '--create-application-cr'
-      - >-
-        --links="Build
-        details=https://console.cloud.google.com/cloud-build/builds/$BUILD_ID?project=$PROJECT_ID"
-      - '--output=output'
-    id: Prepare deploy
-  - name: gcr.io/cloud-builders/gsutil
-    args:
-      - '-c'
-      - |-
-        if [ "$_OUTPUT_BUCKET_PATH" != "" ]
-        then
-          gsutil cp -r output/suggested gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/suggested
-          gsutil cp -r output/expanded gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/expanded
-        fi
-    id: Save configs
-    entrypoint: sh
-  - name: gcr.io/cloud-builders/gke-deploy
-    args:
-      - apply
-      - '--filename=output/expanded'
-      - '--cluster=$_GKE_CLUSTER'
-      - '--location=$_GKE_LOCATION'
-      - '--namespace=$_K8S_NAMESPACE'
-    id: Apply deploy
+      - 'set'
+      - 'image'
+      - '--namespace=test'
+      - 'deployment/test'
+      - 'mzt-mambamhs-1=$_IMAGE_NAME:$COMMIT_SHA'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_K8S_COMPUTE_ZONE}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_K8S_CLUSTER}'
 images:
   - '$_IMAGE_NAME:$COMMIT_SHA'
 options:
   substitutionOption: ALLOW_LOOSE
+  machineType: 'N1_HIGHCPU_8'
 substitutions:
-  _K8S_YAML_PATH: kubernetes.yaml
-  _GKE_LOCATION: us-central1-a
-  _K8S_NAMESPACE: newstar
-  _K8S_ANNOTATIONS: gcb-trigger-id=3a010af0-ba38-4192-8833-f99aab143280
-  _DOCKERFILE_DIR: ''
-  _K8S_APP_NAME: newstar
-  _OUTPUT_BUCKET_PATH: mambamhs_cloudbuild/deploy
-  _DOCKERFILE_NAME: Dockerfile
-  _K8S_LABELS: ''
+  _K8S_APP_NAME: test
   _IMAGE_NAME: gcr.io/mambamhs/github_lizilong1123_test
-  _GKE_CLUSTER: cluster-1
+  _K8S_CLUSTER: mamba-cluster
+  _K8S_COMPUTE_ZONE: us-central1
+  _DOCKERFILE_NAME: Dockerfile
 tags:
   - gcp-cloud-build-deploy
   - $_K8S_APP_NAME
