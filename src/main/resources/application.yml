@@ -2,19 +2,27 @@ server:
   port: 8080
 spring:
   redis:
-    cluster:
-      nodes:
-        - 10.52.50.181:6379
-        - 10.52.50.180:6379
-      max-redirects: 2
+    host: 10.52.50.180
+    port: 6379
     password: de029ee7-490d-44dc-b92b-bd17dce6196e
-    lettuce:
-      pool:
-        enabled: true
-        max-active: 8
-        max-idle: 0
-        max-wait: 5000ms
-        min-idle: 0
+
+#  redis:
+#    cluster:
+#      nodes:
+#        - 10.52.50.181:6379
+#        - 10.52.50.180:6379
+#      max-redirects: 2
+#    password: de029ee7-490d-44dc-b92b-bd17dce6196e
+#    lettuce:
+#      pool:
+#        enabled: true
+#        max-active: 8
+#        max-idle: 0
+#        max-wait: 5000ms
+#        min-idle: 0
+
+
+
 #  redis:
 #    sentinel:
 #      master: mymaster
