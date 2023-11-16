@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,21 +26,25 @@ public class TestController {
 
     @GetMapping("/get")
     public String get() {
+
+        ArrayList<String> resultList = new ArrayList<>();
+
         for (int i = 0; i < 10; i++) {
             try {
                 redisTemplate.opsForValue().set("k" + i, "v" + i);
-                log.error("set value success: {}", i);
+                resultList.add("set value success: " + i);
 
                 Object val = redisTemplate.opsForValue().get("k" + i);
-                log.error("get value success: {}", val);
+                resultList.add("get value success: " + val);
+
                 TimeUnit.SECONDS.sleep(1);
             } catch (Exception e) {
-                log.error("error: {}", e.getMessage());
+                resultList.add("error: " + e.getMessage());
             }
         }
-        log.info("finished...");
+        resultList.add("finished...");
 
-        return "ok456";
+        return resultList.toString();
     }
 
 
