@@ -1,8 +1,13 @@
 package com.leo.demo;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Title: TestController
@@ -11,63 +16,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/test")
+@Slf4j
 public class TestController {
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     @GetMapping("/get")
     public String get() {
+        for (int i = 0; i < 10; i++) {
+            try {
+                redisTemplate.opsForValue().set("k" + i, "v" + i);
+                log.error("set value success: {}", i);
 
-        System.out.println("nihao LEO");
+                Object val = redisTemplate.opsForValue().get("k" + i);
+                log.error("get value success: {}", val);
+                TimeUnit.SECONDS.sleep(1);
+            } catch (Exception e) {
+                log.error("error: {}", e.getMessage());
+            }
+        }
+        log.info("finished...");
 
-        return "nihao LEO";
+        return "ok";
     }
 
-    @GetMapping("/put")
-    public String put() {
-
-        System.out.println("太好了 LEO");
-
-        return "太好了 LEO";
-    }
-
-    @GetMapping("/update")
-    public String update() {
-
-        System.out.println("太棒了 LEO");
-
-        return "太棒了 LEO";
-    }
-
-    @GetMapping("/run")
-    public String run() {
-
-        System.out.println("好赞啊 LEO");
-        System.out.println("好niu啊 LEO");
-
-        return "好赞啊 LEO";
-
-
-    }
-
-
-    @GetMapping("/delete")
-    public String delete() {
-
-        System.out.println("搞定 啊 LEO");
-
-        return "搞定啊 LEO";
-
-
-    }
-
-    @GetMapping("/zz")
-    public String zz() {
-
-        System.out.println("搞定啊 zz");
-
-        return "搞定啊 zz";
-
-
-    }
 
 }

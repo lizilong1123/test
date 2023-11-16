@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  redis:
+    sentinel:
+      master: mymaster
+      nodes:
+        - 10.52.50.181:6379
+        - 10.52.50.180:6379
+    password: de029ee7-490d-44dc-b92b-bd17dce6196e
+
+logging:
+  pattern:
+    console: '%date{yyyy-MM-dd HH:mm:ss.SSS} | %highlight(%5level) [%green(%16.16thread)] %clr(%-50.50logger{49}){cyan} %4line -| %highlight(%msg%n)'
+  level:
+    root: info
