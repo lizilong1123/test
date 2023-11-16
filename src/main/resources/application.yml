@@ -5,7 +5,17 @@ spring:
     port: 6379
     password: de029ee7-490d-44dc-b92b-bd17dce6196e
     host: 10.52.50.181
-
+    cluster:
+      nodes:
+        - 10.52.50.181:6379
+        - 10.52.50.180:6379
+    jedis:
+      pool:
+        enabled: true
+        max-active: 8
+        max-idle: 0
+        max-wait: 5000ms
+        min-idle: 0
 #  redis:
 #    sentinel:
 #      master: mymaster
