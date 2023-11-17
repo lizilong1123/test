@@ -64,4 +64,31 @@ public class RedisConfiguration {
         return template;
     }
 
+    /**
+     * 配置读写分离
+     * @param redisProperties
+     * @return
+     */
+    @Bean
+    public RedisConnectionFactory lettuceConnectionFactory(RedisProperties redisProperties) {
+        // 配置哨兵节点以及主节点
+        RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration(
+                redisProperties.getSentinel().getMaster(), new HashSet<>(redisProperties.getSentinel().getNodes())
+        );
+
+        // 配置读写分离
+        LettucePoolingClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder()
+                // 读写分离,这里的ReadFrom是配置Redis的读取策略,是一个枚举,包括下面选择
+                // MASTER   仅读取主节点
+                // MASTER_PREFERRED   优先读取主节点,如果主节点不可用,则读取从节点
+                // REPLICA_PREFERRED   优先读取从节点,如果从节点不可用,则读取主节点
+                // REPLICA   仅读取从节点
+                // NEAREST   从最近节点读取
+                // ANY   从任意一个从节点读取
+                .readFrom(ReadFrom.REPLICA_PREFERRED)
+                .build();
+
+        return new LettuceConnectionFactory(redisSentinelConfiguration, lettuceClientConfiguration);
+    }
+
 }
